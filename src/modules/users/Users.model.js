@@ -39,9 +39,9 @@ const userValidationSchema = Joi.object({
     username: Joi.string().alphanum().required()
 });
 
-const User = mongoose.model('User', userSchema);
+const UserModel = mongoose.model('User', userSchema);
 
 module.exports = {
-    User,
+    UserModel,
     userValidationSchema
 };

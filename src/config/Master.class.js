@@ -62,7 +62,7 @@ class Master {
     }
 
     API_ERROR(statusCode, description) {
-        new APIError(statusCode, description)
+        return new APIError(statusCode, description)
     }
 }
 
