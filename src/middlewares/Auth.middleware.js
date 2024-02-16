@@ -24,3 +24,5 @@ const authUser = () => async (req, res, next) => {
         res.status(httpStatus.UNAUTHORIZED).json({ message: 'Forbidden Error' });
     }
 };
+
+module.exports = authUser;

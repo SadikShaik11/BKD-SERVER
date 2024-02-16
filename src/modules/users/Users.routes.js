@@ -1,8 +1,30 @@
-const Router = require('express').Router
-const catchAsync = require("../../config/catchAsync")
-const UserController = require("./Users.controller")
+import { Router } from 'express'
+import catchAsync from "../../config/catchAsync.js"
+import UserController from "./Users.controller.js"
+import validate from '../../config/validation.js'
+import { userValidationSchema, login } from './Users.validations.js'
 const router = Router()
 
-router.post("/signup", (req, res) => catchAsync(UserController.addUser(req, res)))
+/**
+ * 
+ * @ Signup 
+ * @description : signing up a new user account
+ * 
+ */
+router.post("/signup",
+    validate(userValidationSchema),
+    (req, res) => catchAsync(UserController.addUser(req, res)))
+/**
+ * 
+ * @ signIn
+ * @description : signing in a new user account
+ * 
+ */
+router.post("/login",
+    validate(login),
+    (req, res) => catchAsync(UserController.loginUser(req, res)))
+router.get("/", (req, res) => {
+    res.json({ message: 'success' })
+})
 
-module.exports = router
+export default router

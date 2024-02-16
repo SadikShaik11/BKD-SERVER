@@ -1,6 +1,6 @@
-const Master = require("../../config/Master.class");
-const UserService = require('./Users.Service')
-
+import Master from '../../config/Master.class.js';
+import UserService from './Users.Service.js'
+import ApiError from '../../config/APIError.js';
 class UserController extends Master {
     constructor() {
         super();
@@ -13,24 +13,28 @@ class UserController extends Master {
             res.status(this.HTTP_STATUS.CREATED).json(response);
         } catch (error) {
             this.logError("Error adding user:", error);
-            res.status(this.HTTP_STATUS.INTERNAL_SERVER_ERROR).json({ error: "Failed to add user" });
+            if (error instanceof ApiError) {
+                res.status(error.statusCode).json({ error: error.message });
+            } else {
+                res.status(this.HTTP_STATUS.INTERNAL_SERVER_ERROR).json({ error: "Internal Server Error" });
+            }
         }
     }
+
     // login existing user
     async loginUser(req, res) {
         try {
-            const { email, password } = req.body;
-            const user = await UserService.findUserByEmail(email);
-
-            if (!user || user.password !== password) {
-                throw new Error("Invalid credentials");
-            }
-            res.status(200).json({ message: "User logged in successfully", user });
+            const response = await UserService.loginUser(req.body);
+            res.status(this.HTTP_STATUS.CREATED).json(response);
         } catch (error) {
-            this.logger.error("Error logging in user:", error);
-            res.status(401).json({ error: "Invalid credentials" });
+            this.logError("Error logging in user:", error);
+            if (error instanceof ApiError) {
+                res.status(error.statusCode).json({ error: error.message });
+            } else {
+                res.status(this.HTTP_STATUS.INTERNAL_SERVER_ERROR).json({ error: "Internal Server Error" });
+            }
         }
     }
 }
 
-module.exports = new UserController();
+export default new UserController();

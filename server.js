@@ -1,7 +1,7 @@
-const mongoose = require('mongoose');
-const app = require('./index');
-const config = require('./src/config/config');
-const logger = require('./src/config/logger');
+import mongoose from 'mongoose';
+import app from './index.js'
+import config from './src/config/config.js'
+import logger from './src/config/logger.js'
 
 let server;
 mongoose.connect(config.mongoose.url, config.mongoose.options).then(() => {

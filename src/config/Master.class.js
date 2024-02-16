@@ -1,9 +1,6 @@
-const winston = require('winston');
-const config = require('./config');
-const APIError = require("./APIError")
-
-
-
+import winston from 'winston'
+import config from './config.js';
+import APIError from './APIError.js';
 const HttpStatusCodes = {
     OK: 200,
     CREATED: 201,
@@ -21,9 +18,6 @@ const HttpStatusCodes = {
     BAD_GATEWAY: 502,
     SERVICE_UNAVAILABLE: 503,
 };
-
-
-
 class Master {
     constructor() {
         this.logger = winston.createLogger({
@@ -66,4 +60,4 @@ class Master {
     }
 }
 
-module.exports = Master;
+export default Master;

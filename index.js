@@ -1,15 +1,14 @@
-const express = require('express');
-const helmet = require('helmet');
-const xss = require('xss-clean');
-const mongoSanitize = require('express-mongo-sanitize');
-const compression = require('compression');
-const cors = require('cors');
+import express from 'express'
+import helmet from 'helmet';
+import xss from 'xss-clean'
+import mongoSanitize from 'express-mongo-sanitize'
+import compression from 'compression'
+import cors from 'cors'
 // const passport = require('passport');
-const httpStatus = require('http-status');
-const config = require('./src/config/config');
-const morgan = require('./src/config/morgan');
-
-const routes = require('./src/routes/v1/index');
+import httpStatus from 'http-status'
+import config from './src/config/config.js'
+import morgan from './src/config/morgan.js'
+import routes from './src/routes/v1/index.js'
 
 
 const app = express();
@@ -62,4 +61,4 @@ app.use((req, res, next) => {
 // handle error
 //app.use(errorHandler);
 
-module.exports = app;
+export default app;
